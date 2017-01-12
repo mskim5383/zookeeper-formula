@@ -24,9 +24,20 @@ move-zookeeper-dist-conf:
 
 zookeeper-config-link:
   alternatives.install:
+    - name: 'zookeeper-config-link'
     - link: {{ zk.alt_config }}
     - path: {{ zk.real_config }}
     - priority: 30
+    - onlyif: test -d {{ zk.real_config }} && test ! -L {{ zk.alt_config }}
+    - require:
+      - file: {{ zk.alt_config }}
+      - file: {{ zk.real_home }}/conf
+
+{{ zk.alt_config }}:
+  file.symlink:
+    - target: {{ zk.real_config }}
+    - require:
+      - cmd: move-zookeeper-dist-conf
 
 {{ zk.real_home }}/conf:
   file.symlink:

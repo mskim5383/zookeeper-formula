@@ -38,6 +38,13 @@ install-zookeeper-dist:
     - name: zookeeper-home-link
     - link: {{ zk.alt_home }}
     - path: {{ zk.real_home }}
+    - onlyif: test -d {{ zk.real_home }} && test ! -L {{ zk.alt_home }}
     - priority: 30
+    - require:
+      - file: {{ zk.alt_home }}
+
+{{ zk.alt_home }}:
+  file.symlink:
+    - target: {{ zk.real_home }}
     - require:
       - cmd: install-zookeeper-dist

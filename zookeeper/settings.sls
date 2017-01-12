@@ -3,14 +3,16 @@
 {%- set g  = salt['grains.get']('zookeeper', {}) %}
 {%- set gc = g.get('config', {}) %}
 
-{%- set java_home         = salt['grains.get']('java_home', salt['pillar.get']('java_home', '/usr/lib/java')) %}
+# {%- set java_home         = salt['grains.get']('java_home', salt['pillar.get']('java_home', '/usr/lib/java')) %}
+{%- set java_home = '/usr/lib/jvm/jre' %}
 
 # these are global - hence pillar-only
 {%- set uid               = p.get('uid', '6030') %}
 {%- set userhome          = p.get('userhome', '/home/zookeeper') %}
 {%- set prefix            = p.get('prefix', '/usr/lib') %}
 
-{%- set version           = g.get('version', p.get('version', '3.4.6')) %}
+# {%- set version           = g.get('version', p.get('version', '3.4.9')) %}
+{%- set version           = '3.4.9' %}
 {%- set version_name      = 'zookeeper-' + version %}
 {%- set default_url       = 'http://apache.osuosl.org/zookeeper/' + version_name + '/' + version_name + '.tar.gz' %}
 {%- set source_url        = g.get('source_url', p.get('source_url', default_url)) %}
