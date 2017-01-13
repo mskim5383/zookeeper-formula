@@ -76,6 +76,8 @@
 
 {%- set zookeeper_host_num   = zookeepers_ids | length() %}
 
+# TODO: even case
+{#
 {%- if zookeeper_host_num == 0
     or zookeeper_host_num is odd %}
   # 0 means Zookeeper nodes have not been found,
@@ -85,6 +87,8 @@
   # for 2, 4, 6 ... nodes return (n -1)
   {%- set node_count = zookeeper_host_num - 1 %}
 {%- endif %}
+#}
+{%- set node_count = zookeeper_host_num %}
 
 # yes, this is not pretty, but produces sth like:
 # {'node1': '0+node1', 'node2': '1+node2', 'node3': '2+node2'}
